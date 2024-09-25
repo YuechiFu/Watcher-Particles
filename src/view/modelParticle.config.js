@@ -18,7 +18,7 @@ export default {
         particleColor: "#b4e04a",
         particleScale: [0.03, 0.03, 0.03],
         controls: [-0.1, 0.1, 0],
-        cameraPos: [2.5, 0, 0],
+        cameraPos: [1, 0, 3],
         text: "watcher"
     }
 };
