@@ -21,12 +21,11 @@
         <t-option :value="1" label="Model">Model</t-option>
       </t-select>
     </div>
-    <div
-      class="mt-20 bg-zinc-950 overflow-hidden"
-      style="width: 400px; height: 400px"
-    >
-      <HandPose></HandPose>
+    <div class="mt-20 bg-zinc-950 overflow-hidden w-640 h-480">
+      <HandPose :is-detecting="isDetecting" @update-pose="handleUpdateHandpose"></HandPose>
     </div>
+
+    <t-switch v-model="isDetecting"></t-switch>
   </div>
 </template>
 <script setup>
@@ -37,9 +36,14 @@ import { useMsgStore } from "@/store";
 const currentModelKey = ref("watcher");
 const displayMode = ref(0);
 const msgStore = useMsgStore();
+const isDetecting = ref(true);
 const changeModel = (val) => {
   currentModelKey.value = val;
 };
+
+const handleUpdateHandpose = val => {
+  console.log(val)
+}
 
 watch(
   () => msgStore.LATEST_MSG,
