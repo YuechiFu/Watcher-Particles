@@ -1,6 +1,6 @@
 
 
-### Vue3 / ThreeJs / P5js / ml5js / Proton 
+### Vue3 / Tailwind Css / ThreeJs / P5js / ml5js / Proton 
 
 ## Node Version 18+
 
