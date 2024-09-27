@@ -64,9 +64,8 @@ watch(
   (val) => {
     if (val.text) {
       changeModel(val.text);
-      if(val.text === "watcher"){
-        isDetecting.value = ! isDetecting.value
-      }
+      isDetecting.value = ! isDetecting.value
+     
     }
   }
 );
