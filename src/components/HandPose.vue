@@ -1,7 +1,10 @@
 <template lang="">
   <div class="w-full h-full relative">
     <div ref="cvs" class="w-full h-full flex items-center justify-center">
-      <P5Vue :sketch="sketch" v-if="sketch"></P5Vue>
+      <template v-if="sketch">
+        <P5Vue :sketch="sketch" v-if="sketch" style="visibility:hidden"></P5Vue>
+        <slot></slot>
+      </template>
       <t-loading v-else></t-loading>
     </div>
   </div>
@@ -11,22 +14,14 @@ import { onMounted, ref, computed, onUnmounted, watch, defineEmits } from "vue";
 import { useMsgStore } from "@/store";
 import p5 from "p5";
 import P5Vue from "@/components/P5";
+import { HANDPOST_TYPES } from "@/defines";
 
 const props = defineProps(["isDetecting"]);
-const emit = defineEmits(['updatePose'])
+const emit = defineEmits(["updatePose"]);
 const cvs = ref();
 
-const HANDPOST_TYPES = {
-  ZoomOut: "ZoomOut",
-  ZoomIn: "ZoomIn",
-  Scale: "Scale",
-  Left: "Left",
-  Right: "Right",
-  Up: "Up",
-  Down: "Down"
-};
-
 let sketch = ref();
+
 const init = async () => {
   const w = cvs.value.clientWidth,
     h = cvs.value.clientHeight;
@@ -38,9 +33,35 @@ const init = async () => {
       res(handPose);
     });
   });
+
   sketch.value = (p5) => {
     let video;
     let hands = [];
+    let latestStatus = "";
+    let values = {};
+
+    function resetValues() {
+      values = {};
+    }
+
+    const updateStatus = (val) => {
+      const status = val.status;
+      if (!status) {
+        return;
+      }
+      if (status === HANDPOST_TYPES.Disappear) {
+        if (latestStatus === status) {
+          return;
+        }
+        latestStatus = status;
+        emit("updatePose", val);
+        resetValues();
+        return;
+      }
+
+      emit("updatePose", val);
+      latestStatus = status;
+    };
 
     const toggleDetection = (val) => {
       val
@@ -49,6 +70,38 @@ const init = async () => {
           })
         : handPose.detectStop();
     };
+
+    const handleHands = (hands) => {
+      if (!hands.length) {
+        updateStatus({
+          status: HANDPOST_TYPES.Disappear
+        });
+        return;
+      }
+
+      let finger = hands[0].pinky_finger_tip;
+      let thumb = hands[0].thumb_tip;
+      if (!(finger && thumb)) {
+        return;
+      }
+
+      let centerX = (finger.x + thumb.x) / 2;
+      let centerY = (finger.y + thumb.y) / 2;
+      // console.log(finger.x, finger.y)
+      // Calculate the pinch "distance" between finger and thumb
+      let pinch = p5.dist(finger.x, finger.y, thumb.x, thumb.y);
+      // console.log(pinch)
+      updateStatus({
+        status: HANDPOST_TYPES.Scale,
+        value: pinch / w
+      });
+      // This circle's size is controlled by a "pinch" gesture
+      p5.noFill(0, 255, 0, 200);
+      p5.stroke(0);
+      p5.strokeWeight(2);
+      p5.circle(centerX, centerY, pinch);
+    };
+
     p5.setup = function () {
       p5.createCanvas(w, h);
       video = p5.createCapture("video", { flip: true });
@@ -66,39 +119,7 @@ const init = async () => {
           return;
         }
       }
-
-      if (hands.length > 0) {
-        // Find the index finger tip and thumb tip
-        let finger = hands[0].pinky_finger_tip;
-        let thumb = hands[0].thumb_tip;
-        if(!(finger && thumb)){return}
-
-        // Draw circles at finger positions
-        let centerX = (finger.x + thumb.x) / 2;
-        let centerY = (finger.y + thumb.y) / 2;
-        // console.log(finger.x, finger.y)
-        // Calculate the pinch "distance" between finger and thumb
-        let pinch = p5.dist(finger.x, finger.y, thumb.x, thumb.y);
-        // console.log(pinch)
-        emit('updatePose', {
-          type: HANDPOST_TYPES.Scale,
-          value: pinch
-        })
-        // This circle's size is controlled by a "pinch" gesture
-        p5.fill(0, 255, 0, 200);
-        p5.stroke(0);
-        p5.strokeWeight(2);
-        p5.circle(centerX, centerY, pinch);
-      }
-
-      /* for (let i = 0; i < hands.length; i++) {
-        let hand = hands[i];
-        for (let j = 0; j < hand.keypoints.length; j++) {
-          let keypoint = hand.keypoints[j];
-          p5.fill(209, 230, 29);
-          p5.circle(keypoint.x, keypoint.y, 6);
-        }
-      } */
+      handleHands(hands);
     };
   };
 };

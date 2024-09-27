@@ -8,13 +8,25 @@
 import { onMounted, onUnmounted, ref, watch, defineProps, nextTick } from "vue";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import { loadModelParticles, moveParticels, resetModelParticles } from "@/utils/particles";
+import {
+  loadModelParticles,
+  moveParticels,
+  resetModelParticles
+} from "@/utils/particles";
 import Stats from "three/examples/jsm/libs/stats.module";
 import modelParticleConfig from "./modelParticle.config";
+import { HANDPOST_TYPES } from "@/defines";
 
 const threejsCanvas = ref(null);
-const props = defineProps(["modelKey"]);
-let scene, camera, renderer, particles, clock, controls, animationId;
+const props = defineProps(["modelKey", "controls"]);
+let scene,
+  camera,
+  renderer,
+  particles,
+  clock,
+  controls,
+  animationId,
+  initialCameraFov;
 let particlePositions,
   particleTargets,
   particleCount,
@@ -33,7 +45,7 @@ onUnmounted(() => {
   stop();
   if (renderer) {
     renderer.dispose();
-    models = null
+    models = null;
   }
 });
 
@@ -58,8 +70,34 @@ watch(
   }
 );
 
+watch(
+  () => props.controls,
+  (ctrl) => {
+    const z = initialCameraFov;
+    // console.log(initialCameraFov)
+    if (!ctrl.value) {
+      console.log("RESET");
+      camera.fov = initialCameraFov;
+      controls.autoRotate = true
+      camera.updateProjectionMatrix();
+      return;
+    }
+
+    if ((ctrl.type = HANDPOST_TYPES.Scale && ctrl.value)) {
+      if (controls.autoRotate) {
+        controls.autoRotate = false;
+      }
+
+      let val = z * (1 - ctrl.value);
+      camera.fov = val;
+      camera.updateProjectionMatrix();
+      // console.log(initialCameraFov,val)
+    }
+  }
+);
+
 function setCamera() {
-  const m = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
+  const m = new THREE.PerspectiveCamera(75, 1, 0.1, 100);
   m.position.z = 3;
   m.position.x = 1;
   m.position.y = 1;
@@ -71,15 +109,12 @@ function setControls(camera, renderer) {
   return c;
 }
 
-
 function initParticlesData(modelParticles) {
   particles = modelParticles.particles;
   particlePositions = modelParticles.particlePositions;
   particleTargets = modelParticles.particleTargets;
   particleCount = modelParticles.particleCount;
-  
 }
-
 
 // List of model paths
 let isAddedPartical = false;
@@ -90,18 +125,24 @@ async function switchModel(key) {
     return;
   }
   // stop();
-  let res 
-  if(!models[key].particlesCache){
-    models[key].particlesCache = await loadModelParticles(models[key], particlePositions);
-  }else{
-    models[key].particlesCache = resetModelParticles(models[key], particlePositions)
+  let res;
+  if (!models[key].particlesCache) {
+    models[key].particlesCache = await loadModelParticles(
+      models[key],
+      particlePositions
+    );
+  } else {
+    models[key].particlesCache = resetModelParticles(
+      models[key],
+      particlePositions
+    );
   }
-  
+
   currentModelKey = key;
-  scene.remove(particles)
+  scene.remove(particles);
   initParticlesData(models[key].particlesCache);
-  scene.add(particles)
-/*   if (!isAddedPartical) {
+  scene.add(particles);
+  /*   if (!isAddedPartical) {
     scene.add(particles); // Add the new particles
     isAddedPartical = true;
   } */
@@ -109,8 +150,14 @@ async function switchModel(key) {
   if (models[key].speed) {
     speed = models[key].speed;
   }
+  if (models[key].fov) {
+    camera.fov = models[key].fov;
+    camera.updateProjectionMatrix();
+  }
   controls.autoRotate = !!models[key].autoRotate;
   models[key].cameraPos && camera.position.set(...models[key].cameraPos);
+  initialCameraFov = camera.fov;
+
   animate();
 }
 

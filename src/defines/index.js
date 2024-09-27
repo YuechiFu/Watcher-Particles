@@ -13,3 +13,14 @@ export const ERouter = {
 export const BaudRateOpitons = [
   300, 1200, 2400, 4800, 9600, 14400, 19200, 38400, 57600, 115200, 230400, 460800, 921600
 ]
+
+export const HANDPOST_TYPES = {
+  ZoomOut: "ZoomOut",
+  ZoomIn: "ZoomIn",
+  Scale: "Scale",
+  Left: "Left",
+  Right: "Right",
+  Up: "Up",
+  Down: "Down",
+  Disappear: "Disappear"
+};
