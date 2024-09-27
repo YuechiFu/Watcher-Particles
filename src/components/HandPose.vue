@@ -2,7 +2,8 @@
   <div class="w-full h-full relative">
     <div ref="cvs" class="w-full h-full flex items-center justify-center">
       <template v-if="sketch">
-        <P5Vue :sketch="sketch" v-if="sketch" style="visibility:hidden"></P5Vue>
+        <P5Vue :sketch="sketch" v-if="sketch"></P5Vue>
+        <!-- style="visibility:hidden" -->
         <slot></slot>
       </template>
       <t-loading v-else></t-loading>
@@ -81,6 +82,7 @@ const init = async () => {
 
       let finger = hands[0].pinky_finger_tip;
       let thumb = hands[0].thumb_tip;
+      let wrist = hands[0].wrist;
       if (!(finger && thumb)) {
         return;
       }
@@ -92,8 +94,14 @@ const init = async () => {
       let pinch = p5.dist(finger.x, finger.y, thumb.x, thumb.y);
       // console.log(pinch)
       updateStatus({
-        status: HANDPOST_TYPES.Scale,
-        value: pinch / w
+        status: HANDPOST_TYPES.UpdatePose,
+        value: {
+          scale: pinch / w,
+          rotate: {
+            y: wrist.x / w,
+            x: wrist.y / h
+          }
+        }
       });
       // This circle's size is controlled by a "pinch" gesture
       p5.noFill(0, 255, 0, 200);

@@ -73,25 +73,38 @@ watch(
 watch(
   () => props.controls,
   (ctrl) => {
-    const z = initialCameraFov;
+    const fov = initialCameraFov;
     // console.log(initialCameraFov)
     if (!ctrl.value) {
       console.log("RESET");
       camera.fov = initialCameraFov;
-      controls.autoRotate = true
+      controls.autoRotate = true;
       camera.updateProjectionMatrix();
       return;
     }
 
-    if ((ctrl.type = HANDPOST_TYPES.Scale && ctrl.value)) {
-      if (controls.autoRotate) {
-        controls.autoRotate = false;
-      }
+    if (controls.autoRotate) {
+      controls.autoRotate = false;
+    }
+    console.log(ctrl.status, ctrl.value);
+    switch (ctrl.status) {
+      case HANDPOST_TYPES.UpdatePose:
+        let { scale, rotate } = ctrl.value;
+        camera.fov = fov * (1 - scale);
+        
+        // camera.lookAt(new THREE.Vector3(1 + rotate.x * 10, 1 + rotate.y * 10, 0))
+        // camera.rotation.x += rotate.x *  90 * Math.PI / 180
+       
+        // 更新相机位置 */
+        controls.update();
+        camera.updateProjectionMatrix();
+        // camera.updateMatrixWorld();
 
-      let val = z * (1 - ctrl.value);
-      camera.fov = val;
-      camera.updateProjectionMatrix();
-      // console.log(initialCameraFov,val)
+        break;
+      /*  case HANDPOST_TYPES.Rotate: 
+        let valx = 360 * ctrl.value[0]
+        camera.rotation.y = THREE.MathUtils.degToRad(valx); 
+        break; */
     }
   }
 );

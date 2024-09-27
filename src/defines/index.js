@@ -15,12 +15,7 @@ export const BaudRateOpitons = [
 ]
 
 export const HANDPOST_TYPES = {
-  ZoomOut: "ZoomOut",
-  ZoomIn: "ZoomIn",
-  Scale: "Scale",
-  Left: "Left",
-  Right: "Right",
-  Up: "Up",
-  Down: "Down",
+  UpdatePose: "UpdatePose",
+  Rotate:"Rotate",
   Disappear: "Disappear"
 };
