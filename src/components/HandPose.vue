@@ -95,19 +95,25 @@ const init = async (el) => {
 
       let finger = hands[0].pinky_finger_tip;
       let thumb = hands[0].thumb_tip;
+      let wrist = hands[0].wrist;
       if (!(finger && thumb)) {
         return;
       }
 
       let centerX = (finger.x + thumb.x) / 2;
       let centerY = (finger.y + thumb.y) / 2;
-      // console.log(finger.x, finger.y)
-      // Calculate the pinch "distance" between finger and thumb
+      
       let pinch = p5.dist(finger.x, finger.y, thumb.x, thumb.y);
-      // console.log(pinch)
+      
       updateStatus({
-        status: HANDPOST_TYPES.Scale,
-        value: pinch / w
+        status: HANDPOST_TYPES.UpdatePose,
+        value: {
+          scale: pinch / w,
+          rotate: {
+            y: wrist.x / w,
+            x: wrist.y / h
+          }
+        }
       });
       // This circle's size is controlled by a "pinch" gesture
       p5.noFill(0, 255, 0, 200);
