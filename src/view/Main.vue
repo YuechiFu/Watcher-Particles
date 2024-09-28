@@ -22,15 +22,31 @@
         <t-option :value="1" label="Model">Model</t-option>
       </t-select> -->
     </div>
-    <div class="flex items-center justify-center">
-      <span class="mr-1">Handpose</span> <t-switch v-model="isDetecting"></t-switch>
+    <div class="flex items-center justify-center text-active" >
+      <span class="mr-1">Handpose</span>
+      <t-switch v-model="isDetecting" ></t-switch>
+      <div id="handpose_camera_status" class="relative w-15 h-15 ml-10 flex items-center text-active"></div>
     </div>
 
-    <div class="mt-20 w-640 h-480">
-      <HandPose  v-if="isDetecting" :is-detecting="isDetecting" @update-pose="handleUpdateHandpose">
-        <div
-            class="bg-active w-15 h-15 rounded-full absolute top-0 right-0 video_icon"
-          ></div>
+    <div>
+      <HandPose
+        class="mt-20 w-640 h-480"
+        v-if="isDetecting"
+        :is-detecting="isDetecting"
+        :visible="true"
+        @update-pose="handleUpdateHandpose"
+      >
+        <template
+          v-slot:default="{ isLoading, isDetecting, isCameraReady }"
+        >
+          <teleport to="#handpose_camera_status" v-if="isDetecting">
+            <div class="text-white" v-if="isLoading"><t-loading inherit-color size="19px"></t-loading></div> 
+            <div
+              class="w-15 h-15 rounded-full video_icon border-active border relative"
+              v-if="isCameraReady"
+            ></div>
+          </teleport>
+        </template>
       </HandPose>
     </div>
   </div>
@@ -64,8 +80,8 @@ watch(
   (val) => {
     if (val.text) {
       changeModel(val.text);
-      if(val.text === "watcher"){
-        isDetecting.value = ! isDetecting.value
+      if (val.text === "watcher") {
+        isDetecting.value = !isDetecting.value;
       }
     }
   }
@@ -81,6 +97,16 @@ watch(
   }
 }
 .video_icon {
-  animation: vAni linear 3s infinite alternate;
+  &:after{
+    content: "";
+    position: absolute;
+    top:3px;
+    left: 3px;
+    width: calc(100% - 6px);
+    height: calc(100% - 6px);
+    border-radius: 50%;
+    animation: vAni linear 1.5s infinite alternate;
+    background-color: var(--brand-color);
+  }
 }
 </style>
