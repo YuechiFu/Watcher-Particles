@@ -6,6 +6,7 @@
 :root[theme-mode="dark"] {
   --primary-font: "Montserrat";
   --primary-color: #93c528;
+  --brand-color: #93c528;
   --component-opacity: 0.6;
   --component-radius: 10px;
   --td-font-family: var(--primary-font);
