@@ -33,7 +33,6 @@
         class="mt-20 w-640 h-480"
         v-if="isDetecting"
         :is-detecting="isDetecting"
-        :visible="true"
         @update-pose="handleUpdateHandpose"
       >
         <template
