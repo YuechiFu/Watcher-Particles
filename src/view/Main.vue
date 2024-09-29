@@ -24,8 +24,8 @@
     </div>
 
     <div>
-      <div class="w-full fixed right-0 bottom-4 flex justify-center">
-        <t-alert v-if="tip">{{ tip }}</t-alert>
+      <div v-if="tip" class="w-full fixed right-0 bottom-4 flex justify-center camera_tip">
+        <t-alert>{{ tip }}</t-alert>
       </div>
       <div class="flex flex-wrap items-center justify-center text-active">
         <span class="mr-1">Handpose</span>
@@ -77,10 +77,10 @@ const changeModel = (val) => {
 let closeDelayTT;
 const handleUpdateHandpose = (val) => {
   if (val.status === HANDPOST_TYPES.Disappear) {
+    tip.value = "Hands Disappear. Camera will be closed after 5s";
     closeDelayTT = setTimeout(() => {
-      tip.value = "Hands Disappear. Camera will be closed after 5s";
       isDetecting.value = false;
-    }, 5000);
+    }, 7000);
   } else {
     closeDelayTT && clearTimeout(closeDelayTT);
     tip.value = "";
@@ -127,5 +127,15 @@ watch(
     animation: vAni linear 1.5s infinite alternate;
     background-color: var(--brand-color);
   }
+}
+@keyframes a1 {
+  to {
+    visibility: visible;
+  }
+}
+.camera_tip{
+  visibility: hidden;
+  animation: a1 ease forwards .3s ;
+  animation-delay: 2s;
 }
 </style>
