@@ -77,13 +77,10 @@ const changeModel = (val) => {
 let closeDelayTT;
 const handleUpdateHandpose = (val) => {
   if (val.status === HANDPOST_TYPES.Disappear) {
-    console.log("Closed after 5s");
-    setTimeout(() => {
-      tip.value = "Hands Disappear. Camera will be closed after 3s";
-      closeDelayTT = setTimeout(() => {
-        isDetecting.value = false;
-      }, 3000);
-    }, 2000);
+    closeDelayTT = setTimeout(() => {
+      tip.value = "Hands Disappear. Camera will be closed after 5s";
+      isDetecting.value = false;
+    }, 5000);
   } else {
     closeDelayTT && clearTimeout(closeDelayTT);
     tip.value = "";
