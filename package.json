@@ -1,11 +1,13 @@
 {
-  "name": "serials",
+  "name": "watcher_particles",
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://yuechifu.github.io/Watcher-Particles/",
   "scripts": {
     "dev": "concurrently \"vite\" \"node server\" ",
     "build": "vite build",
+    "deploy" : "gh-pages -d dist",
     "preview": "concurrently \"vite preview\" \"node server\""
   },
   "dependencies": {
@@ -33,6 +35,7 @@
     "vue-router": "^4.1.6"
   },
   "devDependencies": {
+    "gh-pages": "^6.1.1",
     "@vitejs/plugin-basic-ssl": "^1.0.2",
     "@vitejs/plugin-vue": "^4.2.3",
     "autoprefixer": "^10.4.14",
