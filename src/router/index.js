@@ -18,7 +18,7 @@ export const routes = [
           title: 'home',
         }
       },
-      {
+     /*  {
         path: 'p1',
         name: 'Particles Mask',
         component: async () => await import("@/view/Index.vue"),
@@ -47,7 +47,7 @@ export const routes = [
         meta: {
           title: 'Drop3D',
         }
-      },
+      }, */
     ]
   }
 ]

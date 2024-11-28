@@ -18,7 +18,7 @@
         </div>
         <div
           class="h-auto flex-wrap flex items-center justify-ceneter grow rounded-md"
-          v-show="!collapsed"
+          v-show="!collapsed && routes.length > 1"
         >
           <router-link
             v-for="item of routes[0].children"
