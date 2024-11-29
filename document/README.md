@@ -43,7 +43,7 @@ cd {your_folder_path}/Watcher-Particles
 npm install 
 ```
 
-### Start web page
+### Step 1: Start web page
 
 - **For Development Environment**
     ```shell
@@ -51,7 +51,7 @@ npm install
     ```
     Visit http://localhost:1089/
 
-    ![alt text](image-5.png)
+    <img src="image-5.png" width="450" >
 
 - **For Production Environment**
     ```shell
@@ -64,25 +64,25 @@ npm install
 
     Visit http://localhost:1099/
 
-    ![alt text](image-6.png)
+    <img src="image-6.png" width="450" >
 
 
-It will start a Websocket Server **(http://your_ip_address:10887)** for receiving "Watcher http notification" 
+    It will start a Websocket Server **(http://your_ip_address:10887)** for receiving "Watcher http notification" 
 
 
-#### Set websocket Url
-Set your Websocket Server address (http://your_ip_address:10887)
+### Step 2: Set websocket Url
+Set your Websocket Server address (http://your_ip_address:10887) for receiving "Watcher http notification"
 
 <img src="image-2.png" width="450" >
 
-### Step 2: Create a task for detecting your cat and pushing nofications using the Sensecap App
+### Step 3: Create a task for detecting your cat and pushing nofications using the Sensecap App
 
 ![alt text](image-3.png)
  A "cat" notification will be sent to your  websocket server (http://your_ip_address:10887) when a cat is detected
 After a while, a 3D particle effect cat will appgit ear on the page.
 You can zoom and rotate using the mouse.
 
-### Step3: Gesture Control
+### Step 4: Gesture Control
 
 Use your computer camera or a USB camera in conjunction with gestures to zoom in and out of the 3D model.
 
