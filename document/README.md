@@ -7,8 +7,8 @@ A watcher is observing your cat.
 When the cat appears, a 3D particle effect cat will be displayed on the screen.
 It can be scaled using gesture recognition through the camera.
 
-<img src="image.png" width="450" >
-<img src="image-1.png"  width="450" >
+<img src="image-9.png" width="500" >
+<img src="image-10.png" width="500" >
 
 ## Get Started
 
