@@ -7,7 +7,7 @@ import { SystemThemeMode, ThemeModeAttr } from "@/defines"
 const store = defineStore("theme", {
   state: () => {
     return {
-      themeMode: SystemThemeMode.Dark, // 系统主题
+      themeMode: SystemThemeMode.Dark, 
     }
   },
   actions: {
@@ -19,7 +19,6 @@ const store = defineStore("theme", {
         ? $root.classList.add(SystemThemeMode.Dark)
         : $root.classList.remove(SystemThemeMode.Dark)
     },
-    // 切换主题
     toggleThemeMode() {
       this.setThemeMode(
         this.themeMode === SystemThemeMode.Dark ? SystemThemeMode.Light : SystemThemeMode.Dark

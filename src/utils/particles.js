@@ -60,17 +60,13 @@ function spliceTypedArray(typedArray, start, deleteCount, ...items) {
     deleteCount = typedArray.length - start;
   }
 
-  // 计算新数组的长度
   let newSize = typedArray.length + items.length - deleteCount;
   let splicedArray = new Float32Array(newSize);
 
-  // 拷贝开始位置前的数据
   splicedArray.set(typedArray.subarray(0, start));
 
-  // 添加新元素
   splicedArray.set(items, start);
 
-  // 拷贝删除部分后的数据
   splicedArray.set(typedArray.subarray(start + deleteCount), start + items.length);
 
   return splicedArray;

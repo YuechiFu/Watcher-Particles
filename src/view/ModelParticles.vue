@@ -14,7 +14,7 @@ import {
   resetModelParticles
 } from "@/utils/particles";
 import Stats from "three/examples/jsm/libs/stats.module";
-import modelParticleConfig from "./modelParticle.config";
+import modelParticleConfig from "@/modelParticle.config";
 import { HANDPOST_TYPES } from "@/defines";
 
 const threejsCanvas = ref(null);
@@ -95,7 +95,7 @@ watch(
         // camera.lookAt(new THREE.Vector3(1 + rotate.x * 10, 1 + rotate.y * 10, 0))
         // camera.rotation.x += rotate.x *  90 * Math.PI / 180
        
-        // 更新相机位置 */
+       
         controls.update();
         camera.updateProjectionMatrix();
         // camera.updateMatrixWorld();

@@ -47,8 +47,6 @@
     </div>
 
     <router-view class="p-10"></router-view>
-
-    <TerminalBtn></TerminalBtn>
   </div>
 </template>
 <script setup>
@@ -65,16 +63,11 @@ let currentWs = null;
 let isConnected = ref(false);
 
 const options = [
-  "http://192.168.127.102:3000",
-  "http://192.168.117.105:10887",
-  "https://moon.oupp.site/ws",
-  "http://10.10.43.42:10887"
+  "http://localhost:10887",
 ];
 const wsAddr = ref(
-  msgStore.ws || (location.hostname === "moon.oupp.site" ? "" : options[1])
+  msgStore.ws || (location.hostname === "https://moon.dsaiioado.site/" ? "https://moon.dsaiioado.site/notify" : options[0])
 );
-
-// https://moon.oupp.site/d2ebd48d-31e7-45e2-9414-d5714d33c999
 
 const initWs = (addr) => {
   const ws = new WebSocket(addr);

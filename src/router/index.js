@@ -17,37 +17,7 @@ export const routes = [
         meta: {
           title: 'home',
         }
-      },
-     /*  {
-        path: 'p1',
-        name: 'Particles Mask',
-        component: async () => await import("@/view/Index.vue"),
-        meta: {
-          title: 'Particles Mask',
-        }
-      },
-      {
-        path: 'p2',
-        name: 'Particles Mask By Proton',
-        component: async () => await import("@/view/Proton.vue"),
-        meta: {
-          title: 'Proto',
-        }
-      },{
-        path: 'p3',
-        name: 'Fireworks',
-        component: async () => await import("@/view/Particles.vue"),
-        meta: {
-          title: 'Particles',
-        }
-      },{
-        path: 'p5',
-        name: 'Drop3D ',
-        component: async () => await import("@/view/Drop3D.vue"),
-        meta: {
-          title: 'Drop3D',
-        }
-      }, */
+      }
     ]
   }
 ]

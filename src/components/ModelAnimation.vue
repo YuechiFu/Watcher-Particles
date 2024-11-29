@@ -10,7 +10,7 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader";
 import Stats from "three/examples/jsm/libs/stats.module";
 
-import modelParticleConfig from "@/view/modelParticle.config";
+import modelParticleConfig from "@/modelParticle.config";
 const props = defineProps(["modelKey"]);
 const $el = ref();
 let models = modelParticleConfig;

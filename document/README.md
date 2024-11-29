@@ -12,38 +12,68 @@ It can be scaled using gesture recognition through the camera.
 
 ## Get Started
 
-### Step 1 : start a web project 
+### Environment 
 
-Nodejs v18+ 
+- **[Nodejs 18+](https://nodejs.org/en/download/package-manager)**
+
+```shell
+node -v
+# v18.18.2
+```
+
+### Dependencies
+- **[Vue3](https://vuejs.org/)**
+- **[threejs](https://threejs.org/)**
+- **[ml5.js](https://ml5js.org/)**
+- **[p5.js](https://p5js.org/)**
+- **CSS framework : [Tailwindcss](https://tailwindcss.com/)**
+- **UI Component Library**: [TDesign Web Vue UI](https://tdesign.tencent.com/vue/overview)
+
 ```shell 
 git clone https://github.com/YuechiFu/Watcher-Particles
-npm install pnpm -g 
-pnpm install 
 ```
+```shell
+cd {your_folder_path}/Watcher-Particles
+```
+
+
+### Install Dependencies
+
+```shell  
+npm install 
+```
+
+### Start web page
 
 - For Development Environment  
-```shell
-npm run dev 
-```
+    ```shell
+    npm run dev 
+    ```
+    Visit http://localhost:1089/
+
+    ![alt text](image-5.png)
 
 - For Production Environment
-```shell
-npm run build 
-npm run preview 
-```
+    ```shell
+    npm run build 
+    ```
 
-It will start a Websocket Server (http://your_ip_address:10887) for receiving "Watcher http notification" 
+    ```shell
+    npm run preview 
+    ```
 
-You can visit at 
+    Visit http://localhost:1099/
 
-    http://localhost:1089/ #Delopment mode
-    http://localhost:1099/  #Production mode
+    ![alt text](image-6.png)
 
-Input your Websocket Server address (http://your_ip_address:10887)
 
+It will start a Websocket Server **(http://your_ip_address:10887)** for receiving "Watcher http notification" 
+
+
+#### Set websocket Url
+Set your Websocket Server address (http://your_ip_address:10887)
 
 <img src="image-2.png" width="450" >
-
 
 ### Step 2: Create a task for detecting your cat and pushing nofications using the Sensecap App
 
@@ -57,5 +87,4 @@ You can zoom and rotate using the mouse.
 Use your computer camera or a USB camera in conjunction with gestures to zoom in and out of the 3D model.
 
 <img src="image-4.png" width="500" >
-
 
