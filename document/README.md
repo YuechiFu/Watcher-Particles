@@ -45,7 +45,7 @@ npm install
 
 ### Start web page
 
-- For Development Environment  
+- **For Development Environment**
     ```shell
     npm run dev 
     ```
@@ -53,7 +53,7 @@ npm install
 
     ![alt text](image-5.png)
 
-- For Production Environment
+- **For Production Environment**
     ```shell
     npm run build 
     ```
